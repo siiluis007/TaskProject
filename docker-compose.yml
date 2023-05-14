@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  gateway:
+    build:
+      context: ./Gateway/
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      JWT_SECRET: 'skajosaosjsa'
+    restart: always
+
+  auth:
+    build:
+      context: ./Auth-Microservice/
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3000'
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: 'mongodb://mongo:27017/myapp'
+      JWT_SECRET: 'skajosaosjsa'
+    restart: always
+
+  task:
+    build:
+      context: ./Task-Microservice/
+      dockerfile: Dockerfile
+    ports:
+      - '3002:3000'
+    environment:
+      MONGO_URI: 'mongodb://mongo:27017/myapp'
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./Mongo-Data:/data/db
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - '8081:8081'
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+    restart: always

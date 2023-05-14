@@ -1,0 +1,65 @@
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjA2MTA4ZDNjODEyNjA4ZjQ2MzI2YyIsImlhdCI6MTY4NDA0NzQ0NywiZXhwIjoxNjg0MDUxMDQ3fQ.95r52kyC5mELiPT6ylTuYWBRGb9pxOQfZkFrwilfHIY
+POST http://localhost:3001/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@essxample.com",
+    "password": "password123"
+}
+
+###
+
+POST http://localhost:3001/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@essxample.com",
+    "password": "password123"
+}
+
+###
+POST http://localhost:3000/tasks
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Nueva tarea",
+    "description": "Descripción de la nueva tarea"
+}
+
+###
+PUT http://localhost:3000/tasks/646077e04c75373a06e02bbf
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Tarea actualizadass",
+    "description": "Descripción s"
+}
+
+###
+PUT http://localhost:3000/tasks/complete/646077e04c75373a06e02bbf HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "done": true
+}
+
+###
+GET http://localhost:3000/tasks HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:3000/tasks/646077f24c75373a06e02bc3 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:3000/tasks/646077f24c75373a06e02bc3 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
