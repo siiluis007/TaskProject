@@ -31,7 +31,13 @@ This will build and start the necessary containers for the microservice.
 5. Once the containers have been successfully started, you can access the microservice at http://localhost:port, where port is the port configured in the docker-compose.yml file.
 
 ## Configuration
-You can configure the microservice by editing the .env file in the root of the repository. This file contains the necessary environment variables for the microservice. Adjust the values according to your needs.
+You can configure the microservice by creating and editing the .env file in the root of the repository. This file contains the necessary environment variables for the microservice. To configure the microservice, follow these steps:
+1. Create a new file in the root of the repository and name it .env
+2. Open the .env file in a text editor.
+3. Adjust the values of the environment variables according to your needs.
+4. Save the changes to the .env file.
+
+Make sure to set the appropriate values for the variables to ensure the microservice functions correctly. Once you have configured the .env file, the microservice will utilize these environment variables during execution.
 ## Contributing 
 If you wish to contribute to this project, you can follow these steps:
 1. Create a fork of this repository.
