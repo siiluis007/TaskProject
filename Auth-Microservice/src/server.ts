@@ -10,10 +10,8 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT || 3000;
 
-
 app.post('/login', login);
 app.post('/register', register);
-
 
 app.listen(port, () => {
   console.log(`Auth-Microservice In Port ${port}`);
