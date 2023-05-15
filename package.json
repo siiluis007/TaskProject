@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "auth-microservice": "file:Auth-Microservice",
+    "gateway": "file:Gateway"
+  }
+}

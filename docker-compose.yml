@@ -1,14 +1,26 @@
+
 version: '3'
 
+
 services:
-  gateway:
+  web:
     build:
-      context: ./Gateway/
+      context: ./task-client/
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
-    environment:
-      JWT_SECRET: 'skajosaosjsa'
+      - '${PORT_WEB}:80'
+    restart: always  
+
+  gateway:
+    build:
+      context: ./gateway-nginx/
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80'
+    volumes:
+      - ./gateway-nginx/nginx.conf:/etc/nginx/nginx.conf
+    env_file:
+      - .env 
     restart: always
 
   auth:
@@ -18,10 +30,9 @@ services:
     ports:
       - '3001:3000'
     depends_on:
-      - mongo
-    environment:
-      MONGO_URI: 'mongodb://mongo:27017/myapp'
-      JWT_SECRET: 'skajosaosjsa'
+      - mongo  
+    env_file:
+      - .env  
     restart: always
 
   task:
@@ -30,8 +41,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3002:3000'
-    environment:
-      MONGO_URI: 'mongodb://mongo:27017/myapp'
+    env_file:
+      - .env 
     restart: always
 
   mongo:
@@ -52,3 +63,4 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
     restart: always
+

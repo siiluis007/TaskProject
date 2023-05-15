@@ -30,7 +30,6 @@ const verifyToken = (
   }
 };
 
-// Operaciones CRUD para la entidad 'task'
 app.get("/tasks", verifyToken, async (req, res) => {
   try {
     const response = await axios.get("http://task:3000", {

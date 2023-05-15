@@ -6,22 +6,17 @@ import User, { IUser } from "./user.model";
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
-    // Buscamos al usuario por su email en la base de datos
     const user: IUser | null = await User.findOne({ email });
     if (!user) {
-      // Si el usuario no existe, respondemos con un error 404
       return res.status(404).json({ message: "User not found" });
     }
-    // Verificamos si la contraseña es correcta
     const isPasswordCorrect: boolean = await bcrypt.compare(
       password,
       user.password
     );
     if (!isPasswordCorrect) {
-      // Si la contraseña no es correcta, respondemos con un error 401
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    // Generamos un token de autenticación utilizando la librería jsonwebtoken
     const token: string = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET as string,
@@ -29,16 +24,14 @@ const login = async (req: Request, res: Response) => {
         expiresIn: "1h",
       }
     );
-    // Respondemos con el token de autenticación
     res.json({ token });
   } catch (error) {
     console.error(error);
-    // Si ocurre algún error en el servidor, respondemos con un error 500
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
- const register = async (
+const register = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
