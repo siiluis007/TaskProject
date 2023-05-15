@@ -13,13 +13,13 @@ Make sure you have the following requirements installed on your system:
 1. Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/TaskProject-Microservice.git
+git clone https://github.com/siiluis007/TaskProject.git
 ```
 
 2. Navigate to the cloned repository directory:
 
 ```bash
-cd TaskProject-Microservice
+cd TaskProject
  ```
 3. Configure the environment variables by creating a .env file in the root of the repository. You can use the provided .env.example file as a template and replace the values with your own.
 4. Run the docker-compose command to build and run the microservice:
