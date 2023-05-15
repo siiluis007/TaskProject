@@ -1,38 +1,48 @@
 import { Component } from '@angular/core';
+import CustomStore from 'devextreme/data/custom_store';
 import 'devextreme/data/odata/store';
+import { Task, TaskService } from 'src/app/shared/services/task.service';
 
 @Component({
-  templateUrl: 'tasks.component.html'
+  templateUrl: 'tasks.component.html',
 })
-
 export class TasksComponent {
   dataSource: any;
-  priority: any[];
 
-  constructor() {
-    this.dataSource = {
-      store: {
-        type: 'odata',
-        key: 'Task_ID',
-        url: 'https://js.devexpress.com/Demos/DevAV/odata/Tasks'
+  customersData: any;
+
+  shippersData: any;
+
+  refreshModes: string[] = [];
+
+  refreshMode: string = 'reshape';
+  requests: string[] = [];
+
+  constructor(private taskService: TaskService) {
+    this.refreshMode = 'reshape';
+    this.refreshModes = ['full', 'reshape', 'repaint'];
+    this.dataSource = new CustomStore({
+      key: '_id',
+      load: (loadOptions: any) => {
+        return this.taskService.getTasks();
       },
-      expand: 'ResponsibleEmployee',
-      select: [
-        'Task_ID',
-        'Task_Subject',
-        'Task_Start_Date',
-        'Task_Due_Date',
-        'Task_Status',
-        'Task_Priority',
-        'Task_Completion',
-        'ResponsibleEmployee/Employee_Full_Name'
-      ]
-    };
-    this.priority = [
-      { name: 'High', value: 4 },
-      { name: 'Urgent', value: 3 },
-      { name: 'Normal', value: 2 },
-      { name: 'Low', value: 1 }
-    ];
+
+      byKey: (key: string) => {
+        return this.taskService.getTask(key);
+      },
+
+      insert: (task: any) => {
+        return this.taskService.createTask(task);
+      },
+
+      update: (key: string, values: Task) => {
+        return this.taskService.updateTask(key, values);
+      },
+
+      remove: (key: string) => {
+        return this.taskService.deleteTask(key);
+      },
+    });
   }
+
 }

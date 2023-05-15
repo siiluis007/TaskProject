@@ -7,12 +7,12 @@ router.get("/:id", async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) {
-      return res.status(404).json({ message: "Tarea no encontrada" });
+      return res.status(404).json({ message: "Task not found" });
     }
     res.json(task);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al obtener la tarea" });
+    res.status(500).json({ message: "Error retrieving task" });
   }
 });
 
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
     res.json(tasks);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al obtener las tareas" });
+    res.status(500).json({ message: "Error retrieving tasks" });
   }
 });
 
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     res.json(task);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al crear la tarea" });
+    res.status(500).json({ message: "Error creating task" });
   }
 });
 
@@ -43,16 +43,16 @@ router.put("/:id", async (req, res) => {
     const { title, description, done } = req.body;
     const task = await Task.findByIdAndUpdate(
       req.params.id,
-      { title, description },
+      { title, description, done },
       { new: true }
     );
     if (!task) {
-      return res.status(404).json({ message: "Tarea no encontrada" });
+      return res.status(404).json({ message: "Task not found" });
     }
     res.json(task);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al actualizar la tarea" });
+    res.status(500).json({ message: "Error updating task" });
   }
 });
 
@@ -65,12 +65,12 @@ router.put("/complete/:id", async (req, res) => {
       { new: true }
     );
     if (!task) {
-      return res.status(404).json({ message: "Tarea no encontrada" });
+      return res.status(404).json({ message: "Task not found" });
     }
     res.json(task);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al actualizar la tarea" });
+    res.status(500).json({ message: "Error updating task" });
   }
 });
 
@@ -78,12 +78,12 @@ router.delete("/:id", async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);
     if (!task) {
-      return res.status(404).json({ message: "Tarea no encontrada" });
+      return res.status(404).json({ message: "Task not found" });
     }
-    res.json({ message: "Tarea eliminada" });
+    res.json({ message: "Task deleted" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al eliminar la tarea" });
+    res.status(500).json({ message: "Error deleting task" });
   }
 });
 

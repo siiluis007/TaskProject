@@ -24,7 +24,7 @@ const login = async (req: Request, res: Response) => {
         expiresIn: "1h",
       }
     );
-    res.json({ token });
+    res.json({ token, id:user._id, name:user.name });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -69,4 +69,22 @@ const register = async (
   }
 };
 
-export { login, register };
+const getUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+
+  try {
+    const user: IUser | null = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { _id, name, email } = user;
+    return res.json({ _id, name, email });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export { login, register,getUser };
